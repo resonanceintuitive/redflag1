@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Red Flag Analyse relationnelle</title>
+<style>
+*{box-sizing:border-box}html,body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}body{margin:0;font-family:Arial,sans-serif;background:#1a0000;color:#f8efe8}.page{min-height:100vh;padding:32px 18px;background:radial-gradient(circle at top,#ff1a1a 0%,#b30000 45%,#2a0000 100%)}.container{max-width:1080px;margin:auto}.hero{padding:32px;border-radius:28px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);box-shadow:0 20px 60px rgba(0,0,0,.38);margin-bottom:24px}h1{margin:0 0 12px;font-size:48px;letter-spacing:-1px;color:#fff2ea}.subtitle{font-size:18px;line-height:1.55;color:#ead7d0;max-width:850px}.warning{margin-top:18px;padding:16px 18px;border-radius:16px;background:rgba(255,70,70,.18);border:1px solid rgba(255,170,170,.42);color:#ffe1df;font-size:15px;line-height:1.45;font-weight:bold}.brandTop{margin-top:18px;padding:16px;border-radius:18px;background:linear-gradient(135deg,#ff4d4d,#ff0000);color:#fff;font-weight:900;text-align:center;font-size:20px}.brandTop a{color:#fff;text-decoration:none}.priceBox{margin-top:16px;padding:12px 14px;border-radius:18px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff2ea;font-weight:800;font-size:15px;text-align:center}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}@media(max-width:850px){.grid{grid-template-columns:1fr}h1{font-size:38px}}.card{padding:22px;border-radius:24px;background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.13);box-shadow:0 12px 35px rgba(0,0,0,.22)}label{display:block;margin-bottom:8px;font-weight:bold;color:#fff7f1}textarea,input,select{width:100%;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.28);color:#fff;border-radius:16px;padding:14px;font-size:15px;outline:none;resize:vertical;font-family:Arial,sans-serif}select option{background:#1a0000;color:#fff}textarea{user-select:text}textarea:focus,input:focus,select:focus{border-color:#ff3b3b;box-shadow:0 0 0 3px rgba(255,0,0,.22)}.tab-buttons{display:flex;gap:10px;margin-bottom:16px}button.tab-btn{flex:1;padding:10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#fff;border-radius:12px;cursor:pointer;font-weight:bold}button.tab-btn.active{background:#ff0000;border-color:#ff0000}.tab-content{display:none}.tab-content.active{display:block}.checks{display:grid;gap:10px;margin-top:10px;max-height:720px;overflow:auto;padding-right:4px}.check{display:flex;gap:10px;align-items:flex-start;padding:11px;border-radius:14px;background:rgba(255,255,255,.065);cursor:pointer;font-size:14px;line-height:1.35;border:1px solid rgba(255,255,255,.08)}.check:hover{background:rgba(255,255,255,.11)}.check input{width:auto;margin-top:2px;transform:scale(1.15)}button.analyze-btn{width:100%;margin-top:18px;border:none;border-radius:18px;padding:17px 18px;font-size:18px;font-weight:900;color:#210910;background:linear-gradient(135deg,#ff5c5c,#ff0000);cursor:pointer;box-shadow:0 14px 30px rgba(255,0,0,.42)}button.analyze-btn:hover{transform:translateY(-1px)}.error-msg{margin-top:12px;padding:12px;border-radius:12px;background:rgba(255,100,100,.25);border:1px solid rgba(255,150,150,.5);color:#ffe1df;font-size:14px;font-weight:bold;display:none}.result{margin-top:22px;padding:24px;border-radius:24px;background:#fff8f2;color:#230d13;display:none;border:4px solid #ff0000}.scoreLine{display:flex;align-items:center;gap:16px;flex-wrap:wrap}@media(max-width:600px){.scoreLine{flex-direction:column}}.scoreBox{width:118px;height:118px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:31px;font-weight:900;color:white;background:#ff0000;box-shadow:0 12px 28px rgba(255,0,0,.35)}.scoreBox.vert{background:linear-gradient(135deg,#2ecc71,#27ae60)}.scoreBox.orange{background:linear-gradient(135deg,#f39c12,#e67e22)}.scoreBox.rouge{background:linear-gradient(135deg,#e74c3c,#c0392b)}.scoreBox.rouge-fonce{background:linear-gradient(135deg,#8b0000,#5c0000)}.scoreNumber{font-size:36px;font-weight:900}.scoreLabel{font-size:11px;font-weight:bold;text-transform:uppercase;margin-top:4px}.level{font-size:30px;font-weight:900;margin-bottom:6px;text-transform:uppercase}.result h3{margin:20px 0 10px;color:#230d13}.list{padding-left:18px;line-height:1.55;font-weight:700;color:#230d13}.badge{display:inline-block;padding:7px 11px;border-radius:999px;background:#ffd6d6;color:#9b0000;font-weight:900;font-size:13px;margin:4px 6px 4px 0}.categoryScores{display:grid;grid-template-columns:1fr;gap:14px;margin:18px 0}.categoryItem{padding:16px;border-radius:14px;background:rgba(0,0,0,.1);border-left:4px solid #ff0000}.categoryName{font-weight:900;margin-bottom:6px;color:#5c0000}.categoryPercent{font-size:18px;font-weight:900;color:#8b0000}.categoryBar{height:8px;background:rgba(0,0,0,.15);border-radius:4px;overflow:hidden;margin-top:8px}.categoryFill{height:100%;background:#ff0000;transition:width 0.3s;border-radius:4px}.profileBox{margin-top:24px;padding:20px;border-radius:16px;background:linear-gradient(135deg,rgba(255,0,0,.15),rgba(139,0,0,.15));border:2px solid #ff0000;color:#230d13}.profileTitle{font-size:24px;font-weight:900;margin-bottom:12px;color:#8b0000}.profileBehaviors{margin-top:16px;padding:16px;background:rgba(255,255,255,.9);border-radius:12px}.profileBehaviors h4{margin-top:0;color:#8b0000;font-weight:900;margin-bottom:8px}.profileBehaviors ul{margin:8px 0;padding-left:20px}.profileBehaviors li{margin:6px 0;color:#230d13;font-weight:bold}.urgency{margin-top:22px;padding:20px;border-radius:16px;background:#8b0000;border:2px solid #ff0000;color:#fff}.urgency h3{margin-top:0;margin-bottom:12px;font-size:22px;text-transform:uppercase}.urgency p{margin:8px 0;font-weight:bold;line-height:1.4}.footerNote{margin-top:18px;font-size:14px;line-height:1.45;color:#5c4048;font-weight:bold}.siteBox{margin-top:22px;padding:22px;border-radius:20px;background:#ff0000;color:white;text-align:center;font-weight:900;font-size:22px;line-height:1.35;box-shadow:0 12px 30px rgba(255,0,0,.35)}.siteBox a{color:#fff;text-decoration:none}.mini{font-size:14px;opacity:.9;margin-top:8px}
+</style>
+</head>
+<body>
+<main class="page">
+<div class="container">
+<section class="hero">
+<h1>RED FLAG</h1>
+<p class="subtitle">Analyse les incohérences, les comportements de pression, les promesses trop rapides, les signaux de manipulation, d'emprise, de double vie, d'arnaque affective ou de relation cachée. Cet outil fonctionne pour toutes les relations : hétérosexuelles, homosexuelles, lesbiennes, bisexuelles, trans, non-binaires ou autres.</p>
+<div class="warning">Cet outil ne remplace pas un avis juridique, psychologique ou une enquête professionnelle. Il sert à repérer les signaux dangereux que l'on minimise trop souvent au début.</div>
+<div class="brandTop"><a href="https://payhip.com/lesvoixducorps" target="_blank">https://payhip.com/lesvoixducorps</a></div>
+<div class="priceBox">Abonnement mensuel unique : 14,90 euros</div>
+</section>
+
+<section class="grid">
+<div class="card">
+<label for="duration">Depuis combien de temps cette relation existe ?</label>
+<select id="duration">
+<option value="">— Choisis une durée —</option>
+<option value="less_2w">Moins de 2 semaines</option>
+<option value="2w_1m">2 semaines à 1 mois</option>
+<option value="1m_3m">1 à 3 mois</option>
+<option value="3m_6m">3 à 6 mois</option>
+<option value="more_6m">Plus de 6 mois</option>
+</select>
+
+<div class="tab-buttons">
+<button class="tab-btn active" onclick="switchTab('form')">Formulaire</button>
+<button class="tab-btn" onclick="switchTab('whatsapp')">WhatsApp</button>
+</div>
+
+<div id="form-tab" class="tab-content active">
+<label for="context" style="margin-top:16px;">Comment tu l'as rencontré et ce qui t'a alertée au départ</label>
+<textarea id="context" rows="4" placeholder="Exemple : rencontré sur une appli, intensité suspecte dès le début, refuse les appels vidéo, toujours indisponible, veut garder la relation secrète..."></textarea>
+
+<label for="requests" style="margin-top:16px;">Demandes bizarres, comportements suspects ou mensonges que tu as repérés</label>
+<textarea id="requests" rows="4" placeholder="Exemple : demande d'argent, supprime ses messages, contradictions sur sa vie, jalousie extrême, isolement..."></textarea>
+
+<label for="quotes" style="margin-top:16px;">Citations ou messages clés qui t'ont marquée</label>
+<textarea id="quotes" rows="4" placeholder="Exemple : 'je vais me suicider si tu pars', 'personne ne doit savoir qu'on se voit', 'envoie-moi une photo', 'mon ex est folle'..."></textarea>
+</div>
+
+<div id="whatsapp-tab" class="tab-content">
+<label for="whatsapp" style="margin-top:16px;">Copie/colle ta conversation WhatsApp complète</label>
+<textarea id="whatsapp" rows="12" placeholder="Colle la conversation entière depuis WhatsApp. Format : [HH:MM] Nom: Message ou [JJ/MM, HH:MM] Nom: Message"></textarea>
+<small style="color:#ead7d0;margin-top:8px;display:block;">L'analyse détectera automatiquement les mensonges, chantage, love bombing, culpabilisation, menaces, inversions de faute.</small>
+</div>
+</div>
+
+<div class="card">
+<label>Comportements observés</label>
+<div class="checks" id="checks"></div>
+<div class="error-msg" id="errorMsg"></div>
+<button class="analyze-btn" onclick="analyze()">Analyser les red flags</button>
+</div>
+</section>
+
+<section class="result" id="result">
+<div class="scoreLine">
+<div class="scoreBox" id="scoreBox">
+<div class="scoreNumber" id="score">0</div>
+<div class="scoreLabel">signaux</div>
+</div>
+<div>
+<div class="level" id="level">Analyse prête</div>
+<div id="summary">Entre les éléments puis lance l'analyse.</div>
+</div>
+</div>
+
+<div id="temporalContext" style="margin-top:16px;padding:14px;border-radius:12px;background:rgba(0,0,0,.1);border-left:4px solid #ff0000;color:#5c0000;font-weight:bold;display:none;"></div>
+
+<h3>Probabilités dominantes</h3>
+<div class="categoryScores" id="categoryScores"></div>
+
+<h3>Profil relationnel détecté</h3>
+<div class="profileBox" id="profileBox"></div>
+
+<h3>Signaux détectés</h3>
+<div id="badges"></div>
+
+<h3>Lecture claire</h3>
+<p id="reading"></p>
+
+<h3>Ce que tu dois faire maintenant</h3>
+<ul class="list" id="actions"></ul>
+
+<div id="urgencyBox"></div>
+
+<p class="footerNote">Conseil de sécurité : ne partage jamais d'argent, de documents, de codes, de photos intimes ou d'informations bancaires avec une personne dont l'identité, la cohérence et les intentions ne sont pas vérifiées.</p>
+<div class="siteBox">
+Abonnement mensuel unique : 14,90 euros<br>
+<a href="https://payhip.com/lesvoixducorps" target="_blank">https://payhip.com/lesvoixducorps</a>
+<div class="mini">Sandrine Padoly Résonance Intuitive</div>
+</div>
+</section>
+</div>
+</main>
+
+<script>
+function switchTab(tab){
+document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+document.getElementById(tab+'-tab').classList.add('active');
+event.target.classList.add('active');
+}
+
+const checks=[
+["Promesses très rapides","Promesses très rapides, amour intense, projection immédiate",18,"lovebombing"],
+["Demande d'argent","Demande d'argent, aide financière, urgence étrange",55,"money"],
+["Refus vidéo","Refuse les appels vidéo ou trouve toujours une excuse",34,"identity"],
+["Disparitions","Disparaît puis revient comme si de rien n'était",24,"absence"],
+["Culpabilisation","Te fait culpabiliser quand tu poses une question normale",32,"guilt"],
+["Contradictions","Donne des versions différentes de sa vie",36,"lies"],
+["Isolement","Critique tes proches ou veut t'isoler émotionnellement",44,"control"],
+["Pression sexuelle","Met une pression sexuelle ou intime trop vite",48,"sexual"],
+["Futur flou","Parle beaucoup du futur mais évite le concret",21,"future"],
+["Profil flou","Photos floues, peu d'informations, présence en ligne incohérente",25,"identity"],
+["Victime permanente","Tous ses ex sont folles, fous, toxiques, menteurs ou responsables de tout",26,"victim"],
+["Inaccessible","Toujours une excuse pour ne jamais être disponible réellement",30,"absence"],
+["Double vie possible","Son emploi du temps est impossible à comprendre clairement",50,"doublelife"],
+["Messages supprimés","Supprime des messages ou modifie régulièrement ses versions",42,"lies"],
+["Flatterie excessive","Te met sur un piédestal alors que la personne te connaît à peine",20,"lovebombing"],
+["Refus d'être vu en public","Refuse d'être vu avec toi en public ou évite les lieux connus",58,"doublelife"],
+["Relation secrète","Demande de cacher la relation à son entourage",54,"secret"],
+["Retour calculé","Revient toujours quand tu commences à t'éloigner",32,"control"],
+["Jalousie précoce","Devient jaloux ou jalouse très rapidement sans raison valable",34,"control"],
+["Surveillance","Veut connaître tes déplacements, tes horaires ou avec qui tu parles",45,"control"],
+["Mensonge vérifié","Tu as déjà vérifié un mensonge concret",60,"lies"],
+["Refus de preuve","Refuse toute vérification simple de ce que la personne affirme",40,"identity"],
+["Engagé ailleurs","Indices laissant penser à une autre relation cachée",62,"doublelife"],
+["Gaslighting","Te fait douter de ta mémoire, de ce que tu as vu ou entendu",48,"guilt"],
+["Menaces","Menaces, intimidation, peur de sa réaction ou chantage",70,"danger"],
+["Documents demandés","Demande papiers, RIB, codes, justificatifs ou infos bancaires",62,"documents"],
+["Photos intimes","Demande des photos intimes ou insiste malgré ton malaise",55,"sexual"],
+["Colère aux limites","Réagit mal quand tu dis non ou quand tu mets une limite",42,"control"],
+["Test de loyauté","Te demande de prouver ton amour ou ta confiance",34,"guilt"],
+["Inversion de faute","Retourne toujours la situation pour que tu sois coupable",38,"guilt"],
+["Relation LGBTQ+ cachée","Te garde dans une relation cachée sous prétexte que personne ne doit savoir",46,"secret"],
+["Menace d'outing","Menace de révéler ton orientation, ton identité ou votre relation",68,"danger"],
+["Honte ou non-assumation","Te fait sentir honteuse, honteux ou pas présentable",42,"identitypressure"],
+["Relation uniquement secrète","Veut uniquement te voir en cachette, jamais dans une vraie place claire",38,"secret"],
+["Fétichisation","Te réduit à ton orientation, ton corps, ton genre ou ton identité",36,"identitypressure"],
+["Pression identité","Te force à te définir, à te justifier ou à prouver qui tu es",38,"identitypressure"],
+["Double vie LGBTQ+","Dit vouloir une relation mais refuse toute existence réelle de votre lien",50,"doublelife"],
+["Manipulation communautaire","Utilise ton isolement, ta peur du jugement ou ton besoin d'être compris contre toi",44,"control"],
+["Investissement douteux","Te parle d'investissement, crypto, placement ou rendement alors que la relation est récente",58,"money"],
+["Urgence familiale","Utilise une maladie, un accident ou une urgence familiale pour demander de l'aide",52,"money"],
+["Compte ou accès demandé","Demande l'accès à ton téléphone, tes réseaux, tes mails ou tes comptes",48,"documents"],
+["Punition par silence","Te punit par le silence quand tu ne fais pas ce qu'il ou elle veut",46,"control"],
+["Limites forcées","Insiste après un non clair",44,"control"],
+["Trop beau trop vite","Te promet maison, mariage, voyage, famille ou vie commune sans actes concrets",40,"future"],
+["Dépendance affective","Dit avoir besoin de toi pour vivre, fonctionner ou ne pas se faire du mal",54,"control"],
+["Crises artificielles","Crée des drames ou urgences pour te garder occupée ou accrochée",52,"control"],
+["Argent qui monte","Les demandes d'argent commencent petites puis augmentent progressivement",65,"money"],
+["Antécédents violence","Tu sais ou tu soupçonnes qu'il/elle a frappé, agressé ou violenté quelqu'un",78,"danger"],
+["Chantage suicide","Dit qu'il/elle va se tuer si tu la quittes ou tu ne fais pas ce qu'il/elle demande",80,"danger"],
+["Critique constante","Te critique, te rabaisse ou remet en question tes choix régulièrement",56,"control"],
+["Utilise tes secrets","Balance à d'autres ce que tu lui as confié en privé ou l'utilise contre toi",62,"danger"],
+["Isolement strict","Refuse catégoriquement que tu vois ta famille ou tes amis",64,"control"],
+["Personnalités multiples","Change complètement de comportement selon où il/elle est ou avec qui",54,"lies"],
+["Blague après horreur","Dit quelque chose blessant ou violent puis 'c'était pour rire' quand tu réagis",52,"guilt"],
+["Mariage en 6 semaines","Parle mariage, enfants, vie commune après à peine quelques semaines",48,"lovebombing"],
+["Remet en question ta tête","Insinue que tu es folle, parano, trop sensible ou que tu te montes des histoires",64,"guilt"],
+["Te fait faire du danger","T'implique dans des trucs risqués, illégaux ou qui te mettent mal à l'aise",68,"control"],
+["Demande couper avec ami","T'impose de couper contact avec UN ami spécifique pour une raison floue",60,"control"],
+["Ruptures répétées","Casse la relation tous les trois jours puis revient",66,"instability"],
+["Je t'aime je te déteste","Amour intense puis rejet complet sans raison",64,"instability"],
+["Blocage puis retour","Te bloque puis te rajoute comme si de rien n'était",58,"instability"],
+["Disparition puis passion","Disparaît puis revient avec intensité extrême",56,"instability"],
+["Changements d'humeur","Passe de rire aux larmes en quelques secondes",54,"instability"],
+["Alcool problématique","Tu as remarqué une consommation d'alcool excessive ou qui l'affecte",62,"addiction"],
+["Drogues","Consomme régulièrement des drogues ou en parle souvent",68,"addiction"],
+["Jeux addictifs","Dépensier en jeux, casinos ou paris sportifs",60,"addiction"],
+["Porno addictif","Parle souvent de porno ou tu remarques que ça l'obsède",54,"addiction"],
+["Dettes cachées","Tu découvres des dettes importantes qu'il/elle te cachait",64,"addiction"],
+["Réseaux obsessifs","Passe des heures sur les réseaux ou est obsédée par ses likes",52,"addiction"]
+];
+
+const riskyWords=[
+["\\bargent\\b",35,"Argent","money"],
+["\\bvirement\\b",45,"Virement","money"],
+["western union",65,"Transfert d'argent","money"],
+["\\btransfert\\b",38,"Transfert","money"],
+["\\bcrypto\\b",55,"Crypto","money"],
+["\\bbitcoin\\b",52,"Crypto","money"],
+["\\binvestissement\\b",52,"Investissement douteux","money"],
+["\\bcode\\b",36,"Code demandé","documents"],
+["\\brib\\b",60,"RIB","documents"],
+["\\biban\\b",60,"IBAN","documents"],
+["\\bpasseport\\b",50,"Document d'identité","documents"],
+["\\bcarte d'identité\\b",50,"Document d'identité","documents"],
+["\\bsecret\\b",30,"Secret","secret"],
+["personne ne doit savoir",50,"Secret imposé","secret"],
+["ne dis rien",42,"Silence imposé","secret"],
+["\\bsi tu m'aimais\\b",48,"Chantage affectif","guilt"],
+["photo intime",60,"Pression intime","sexual"],
+["\\bnude\\b",58,"Photo intime","sexual"],
+["\\bmon ex est",28,"Ex dénigrée/é","victim"],
+["tu es différent",18,"Flatterie rapide","lovebombing"],
+["\\bje vais me suicider\\b",70,"Chantage grave","danger"],
+["tu vas le regretter",70,"Menace","danger"],
+["je sais où tu habites",75,"Intimidation","danger"],
+["je vais tout dire",62,"Chantage","danger"],
+["\\bouting\\b",70,"Menace d'outing","danger"],
+["supprime",34,"Effacement","lies"],
+["\\bbloque\\b",28,"Contrôle","control"],
+["tu dois me prouver",42,"Test de loyauté","guilt"],
+["je ne peux pas assumer",42,"Non-assumation","identitypressure"],
+["tu fais trop gay",48,"Humiliation identitaire","identitypressure"],
+["tu fais trop lesb",48,"Humiliation identitaire","identitypressure"],
+["\\bton genre\\b",28,"Identité utilisée","identitypressure"],
+["ton orientation",28,"Orientation utilisée","identitypressure"],
+["je ne suis pas prêt",34,"Relation gardée dans le flou","secret"],
+["j'ai besoin de toi pour",54,"Dépendance affective","control"],
+["ne peux pas vivre sans",54,"Dépendance affective","control"],
+["tu me dois",52,"Obligation affective","guilt"],
+["c'était juste une blague",48,"Minimisation après horreur","guilt"],
+["tu es folle",62,"Remise en question santé mentale","guilt"],
+["tu es parano",62,"Remise en question santé mentale","guilt"],
+["mariage",45,"Accélération étapes","lovebombing"],
+["enfant",42,"Accélération étapes","lovebombing"],
+["on se marie",58,"Engagement rapide","lovebombing"],
+["j'ai une autre",70,"Double vie confirmée","doublelife"],
+["je peux pas te présenter",55,"Isolement relationnel","doublelife"],
+["ta mère",48,"Critique de proches","control"],
+["tes amis",48,"Critique de proches","control"],
+["tes amies sont",48,"Critique de proches","control"],
+["ils te manipulent",55,"Isolement des proches","control"],
+["elle t'utilise",55,"Isolement des proches","control"],
+["il t'utilise",55,"Isolement des proches","control"],
+["stop de parler à",60,"Demande couper contact","control"],
+["ne parle plus à",60,"Demande couper contact","control"],
+["je t'aime et je te déteste",70,"Oscillations émotionnelles","instability"],
+["je te bloque",58,"Blocage/déblocage","instability"],
+["alcool",50,"Alcool problématique","addiction"],
+["drogues",65,"Consommation drogues","addiction"],
+["jeux",48,"Jeux addictifs","addiction"],
+["porno",52,"Porno addictif","addiction"],
+["dettes",60,"Dettes cachées","addiction"]
+];
+
+const categoryData={
+money:{reading:"Le danger principal ici, c'est l'argent. Dès qu'une relation récente commence à tourner autour d'un dépannage, d'un virement, d'une urgence ou d'un investissement, on ne parle plus d'amour, on parle de prise de risque. Une personne sincère ne transforme pas ton attachement en solution bancaire.",actions:["Tu ne verses rien, même si l'histoire est triste.","Tu demandes une preuve extérieure vérifiable, pas une capture floue.","Tu refuses les virements, cartes cadeaux, crypto et remboursements arrangés.","Tu gardes les messages et tu ne négocies pas."]},
+documents:{reading:"Le signal le plus grave ici concerne tes documents, tes codes ou tes accès. Ce n'est pas une preuve d'amour, c'est une porte ouverte à l'usurpation, au chantage ou au contrôle. Une personne fiable ne demande pas tes papiers pour construire une relation.",actions:["Tu ne donnes aucun document, aucun RIB, aucun code.","Tu changes tes mots de passe si tu as déjà partagé quelque chose.","Tu actives la double authentification sur tes comptes.","Tu conserves les preuves des demandes."]},
+danger:{reading:"Là, on sort du simple red flag. Il y a une pression, une menace ou un chantage. Tu ne dois pas chercher à raisonner quelqu'un qui utilise la peur. Tu dois te protéger, garder les preuves et sortir de l'échange sans te mettre davantage en danger.",actions:["Tu ne préviens pas la personne si tu sens un risque.","Tu fais des captures immédiatement.","Tu informes une personne fiable.","Si tu te sens en danger, tu contactes les services compétents."]},
+doublelife:{reading:"Le problème central, c'est la place réelle que cette personne te donne. Quand les horaires sont flous, les sorties impossibles, les preuves refusées et la relation cachée, il faut arrêter de combler les trous avec de l'espoir. Une relation saine n'a pas besoin d'être vécue comme une enquête.",actions:["Tu demandes une clarification concrète, pas un roman.","Tu observes si les actes suivent dans les jours qui viennent.","Tu refuses les rendez-vous uniquement cachés ou arrangés à la dernière minute.","Si rien ne devient clair, tu coupes court."]},
+control:{reading:"Ici, la personne cherche à prendre de la place dans ta liberté. Surveillance, jalousie rapide, limites mal acceptées, isolement, silence punitif : ce n'est pas de l'amour intense, c'est du contrôle qui commence.",actions:["Tu poses une limite courte et non négociable.","Tu ne justifies pas tes déplacements, tes amis ou tes horaires.","Tu reprends contact avec tes proches si la personne t'a isolée ou isolé.","Tu t'éloignes dès que le non n'est pas respecté."]},
+guilt:{reading:"La mécanique dominante ici, c'est la culpabilité. La personne retourne les choses pour que tu te sentes responsable de son malaise, de sa colère ou de ses besoins. Ce n'est pas une discussion, c'est une pression affective.",actions:["Tu arrêtes de te défendre pendant des heures.","Tu réponds court : je ne suis pas responsable de ça.","Tu regardes les faits, pas les reproches.","Tu prends de la distance si chaque limite devient une scène."]},
+secret:{reading:"Le danger ici, c'est le secret imposé. La discrétion peut exister au début, mais quand elle devient une règle, une peur, une pression ou une obligation, tu n'es plus dans une relation libre. Tu es dans une place cachée.",actions:["Tu demandes clairement quelle place réelle la personne te donne.","Tu refuses d'être uniquement disponible en cachette.","Tu ne protèges pas quelqu'un qui t'efface.","Si la relation doit rester invisible, tu reprends ton pouvoir."]},
+sexual:{reading:"Le signal dominant concerne l'intime. Une personne qui insiste, réclame, force, boude ou culpabilise après un refus ne respecte pas ton corps. Le désir ne donne aucun droit sur toi.",actions:["Tu ne cèdes pas pour calmer la personne.","Tu ne partages aucune photo intime.","Tu gardes les preuves si la personne insiste.","Tu bloques si le refus n'est pas respecté."]},
+identitypressure:{reading:"La personne touche à ton identité, ton orientation, ton genre ou ta place. C'est dangereux parce que ça peut créer de la honte, du flou et une dépendance affective. On ne construit pas une relation en rabaissant ce que tu es.",actions:["Tu refuses toute phrase qui te fait honte de toi.","Tu ne te justifies pas sur ton identité ou ton orientation.","Tu cherches une personne extérieure sûre si tu te sens isolée ou isolé.","Tu coupes les échanges si l'identité devient une arme."]},
+identity:{reading:"Le problème principal, c'est l'identité non vérifiée. Refus vidéo, profil flou, preuves évitées, versions imprécises : tu n'as pas assez de concret pour faire confiance. Sans vérification simple, on ne s'attache pas.",actions:["Tu demandes un appel vidéo simple.","Tu vérifies une information concrète.","Tu refuses les explications interminables sans preuve.","Si la personne fuit encore, tu arrêtes l'échange."]},
+lovebombing:{reading:"Ici, le danger vient de l'intensité trop rapide. Trop de mots, trop de promesses, trop de futur alors que les actes ne sont pas encore là. Ce n'est pas forcément de l'amour, c'est parfois une manière de créer une dépendance vite.",actions:["Tu ralentis immédiatement.","Tu ne réponds pas à l'intensité par plus d'intensité.","Tu observes les actes sur plusieurs semaines.","Tu refuses les grandes promesses sans comportement stable."]},
+absence:{reading:"Le signal dominant, c'est l'indisponibilité. Une personne qui disparaît, revient, explique mal et te garde dans l'attente installe une relation déséquilibrée. Tu n'es pas là pour attendre des miettes de présence.",actions:["Tu regardes la régularité, pas les excuses.","Tu ne relances pas dix fois.","Tu poses une limite sur la disponibilité réelle.","Si ça reste flou, tu te retires."]},
+lies:{reading:"Le point central ici, ce sont les mensonges, les suppressions ou les versions qui changent. Une contradiction peut arriver. Plusieurs contradictions, c'est un système. Tu ne dois pas devenir détective dans ta propre relation.",actions:["Tu gardes les captures.","Tu confrontes une fois avec un fait précis.","Tu observes la réaction : clarté ou colère.","Si la personne retourne la faute, tu prends de la distance."]},
+future:{reading:"La personne vend beaucoup de futur, mais le présent ne suit pas. C'est un piège classique : faire rêver pour éviter de prouver. Une relation se juge sur ce qui est fait, pas sur ce qui est promis.",actions:["Tu demandes des actes simples maintenant.","Tu ne construis pas ta vie sur des promesses.","Tu notes ce qui est dit et ce qui est réellement fait.","Si le futur sert à éviter le concret, tu ralentis net."]},
+victim:{reading:"Quand tous les anciens partenaires sont décrits comme fous, folles, toxiques ou responsables de tout, il faut écouter. Ce discours peut préparer le terrain : demain, la personne racontera peut-être la même chose sur toi.",actions:["Tu ne prends pas son récit pour une preuve.","Tu observes sa capacité à reconnaître sa part.","Tu refuses de devenir sauveuse ou sauveur.","Tu te méfies si tout le monde est coupable sauf elle ou lui."]},
+instability:{reading:"Cette personne change radicalement d'humeur, de sentiments ou de comportement sans raison logique. Les ruptures répétées, les blocages/déblocages, l'intensité puis le rejet : c'est instabilité émotionnelle. Tu ne peux pas construire sur du sable mouvant.",actions:["Observe les patterns : à quelle fréquence revient-elle/il ?","Note les triggers : qu'est-ce qui déclenche ces changements ?","Fixe une limite temporelle : après X crises, tu te retires.","Protège ton système nerveux : ne réagis pas immédiatement."]},
+addiction:{reading:"L'alcool, les drogues, les jeux, le porno, les dettes ou les réseaux : c'est une dépendance. Le problème n'est pas toi, c'est la substance ou le comportement. Tu ne peux pas sauver quelqu'un qui ne veut pas se soigner.",actions:["Refuse de financer ou de couvrir les dettes.","Ne la/le juge pas, mais fixe tes limites clairement.","Si l'addiction affecte ta sécurité, tu te protèges.","Propose de l'aide professionnelle, mais ne fais pas le travail à sa place."]}
+};
+
+const categoryLabels={money:"Argent",documents:"Documents/Codes",danger:"Danger/Menaces",doublelife:"Double vie",control:"Contrôle",guilt:"Culpabilité",secret:"Relation cachée",sexual:"Pression intime",identitypressure:"Identité/Honte",identity:"Identité non vérifiée",lovebombing:"Intensité rapide",absence:"Indisponibilité",lies:"Mensonges",future:"Promesses sans actes",victim:"Victime permanente",instability:"Instabilité émotionnelle",addiction:"Dépendance"};
+
+const profileBehaviors={
+money:{title:"Escroc affectif",characteristics:["Transforme ton amour en opportunité financière","Crée des urgences pour justifier les demandes","Promet des rentrées qui ne viennent jamais","Disparaît après l'argent puis revient avec excuses"],behaviors:["Demande petit argent d'abord","Puis augmente progressivement","Promet des gains qui ne viennent pas"],victims:["Personnes généreuses","Celles qui veulent aider"],next_30:["Nouvelles demandes","Excuses permanentes","Accusation de méfiance"]},
+documents:{title:"Voleur identitaire",characteristics:["Collecte progressivement tes infos","Utilise tes données comme monnaie","Crée un sentiment de dépendance","Refuse jamais de promesse tenue"],behaviors:["Demande tes papiers progressivement","Réclame accès à tes comptes","Stocke tes informations"],victims:["Personnes confiantes","Femmes isolées"],next_30:["Augmentation des demandes","Menaces voilées","Pression pour rester"]},
+danger:{title:"Prédateur",characteristics:["Utilise la peur comme outil","Crée un climat d'insécurité","Menace explicitement si tu contestes","Alterne menaces et faux calmes"],behaviors:["Menaces explicites","Violence verbale","Chantage au suicide"],victims:["Personnes ayant un trauma","Femmes isolées"],next_30:["Escalade de violence","Isolement complet","Dépendance psychologique"]},
+doublelife:{title:"Double vie cachée",characteristics:["Refuse l'existence publique","Compartimente rigoureusement","Crée des histoires pour s'absenter","Impose le secret comme condition"],behaviors:["Refuse d'être vu en public","Horaires impossibles","Mensonges constants"],victims:["Femmes en manque de sécurité","LGBTQ+ sous pression"],next_30:["Plus de temps à cacher","Mensonges accumulés","Refus d'évoluer"]},
+control:{title:"Contrôlant jaloux",characteristics:["Supporte mal les limites","Retourne souvent les situations","Cherche à isoler progressivement","Fait passer ses réactions avant les tiennes"],behaviors:["Vérifie ton téléphone","Demande où tu vas","Critique tes amis"],victims:["Personnes indépendantes","Femmes fortes","Celles faciles à culpabiliser"],next_30:["Le contrôle augmente","Accusations graves","Isolement s'intensifie"]},
+guilt:{title:"Manipulateur affectif",characteristics:["Te rend responsable de ses émotions","Retourne chaque discussion","Te demande des preuves d'amour","Utilise le silence comme punition"],behaviors:["Te culpabilise constamment","Retourne tout à son avantage","Te demande de prouver"],victims:["Personnes empathiques","Celles avec besoin de sauver"],next_30:["Culpabilité augmente","Tu t'oublies","Tes besoins invisibles"]},
+secret:{title:"Relation cachée imposée",characteristics:["Refuse l'évolution publique","Te demande de le/la protéger","Te fait sentir honteuse","Maintient le flou permanent"],behaviors:["Refuse d'être vu","Toujours une excuse","Disponible uniquement en secret"],victims:["Femmes vulnérables","LGBTQ+ sous pression"],next_30:["Plus de temps à cacher","Pression psychologique","Sensation d'être honteuse"]},
+sexual:{title:"Prédateur sexuel",characteristics:["Insiste après chaque refus","Culpabilise ton refus","Demande des choses extrêmes","Menace si tu refuses"],behaviors:["Pression intime rapide","Insiste après un non","Culpabilise"],victims:["Personnes jeunes","Femmes isolées"],next_30:["Augmentation pression","Culpabilisation intense","Feeling d'être piégée"]},
+identity:{title:"Prédateur d'identité",characteristics:["Attaque ta confiance","T'isole de ta communauté","Utilise ton identité comme arme","Crée de la honte"],behaviors:["Remet en question qui tu es","Critique ton orientation","Te fait honte"],victims:["Personnes LGBTQ+","Femmes en construction"],next_30:["Shame augmente","T'isoles de communauté","Tu doutes de toi"]},
+lovebombing:{title:"Love bomber",characteristics:["Promet tout rapidement","L'intensité est suspecte","Les actes ne suivent jamais","Teste ta capacité à croire"],behaviors:["Amour intense dès le départ","Parle mariage en 3 semaines","Promet une vie parfaite"],victims:["En manque de sécurité","Sorties de séparation","Qui doutent"],next_30:["Tempo ralentit","Déceptions s'accumulent","Doute commence"]},
+absence:{title:"Fantôme imprévisible",characteristics:["Disparaît sans explication","Revient comme de rien","Te laisse en attente","Refuse de s'expliquer"],behaviors:["Disparaît puis revient","Explique mal absences","Te garde en attente"],victims:["Personnes patientes","Qui donnent des chances"],next_30:["Disparitions plus longues","Tu habitues à l'attente","Espoir-déception alternés"]},
+lies:{title:"Menteuse chronique",characteristics:["Ment de façon répétée","Change sa version","Nie avoir dit","Supprime preuves"],behaviors:["Mensonges répétés","Versions qui changent","Nie avoir dit"],victims:["Personnes logiques","Qui questionnent"],next_30:["Plus de mensonges","Tu doutes de toi","Gaslighting s'intensifie"]},
+future:{title:"Promesseur vide",characteristics:["Vend du rêve au lieu du concret","Le présent est vague","Crée de l'espoir sans fondement","Jamais de preuves"],behaviors:["Vend du futur","Le présent ne suit pas","Parle mariage sans actes"],victims:["Qui rêvent","Confiance trop vite"],next_30:["Rêves sans actes","Excuses s'accumulent","Frustration croissante"]},
+victim:{title:"Victime permanente",characteristics:["Tous ses problèmes viennent des autres","Ne prend jamais responsabilité","Te demande de le/la sauver","Répète les mêmes drames"],behaviors:["Tous ses ex toxiques","Ne prend jamais tort","Te demande de sauver"],victims:["Personnes sauveuses","Besoin d'aider"],next_30:["Drames s'accumulent","Tu deviens déversoir","Relation déséquilibrée"]},
+instability:{title:"Cyclothymique imprévisible",characteristics:["Change radicalement sans raison","Ruptures deviennent une arme","Passe de l'amour au rejet","Ton système nerveux en alerte"],behaviors:["Ruptures tous 3 jours","Je t'aime/je te déteste","Blocage-déblocage"],victims:["Qui espèrent","Patience infinie","Femmes anxieuses"],next_30:["Crises plus fréquentes","Tu deviens hypervigilante","Impossibilité stabilité"]},
+addiction:{title:"Dépendant toxique",characteristics:["Sacrifie tout pour sa substance","Crée des crises financières","T'implique dans son problème","Te demande de l'enabler"],behaviors:["Alcool/drogues constants","Dettes cachées","Jeux obsessifs"],victims:["Personnes sauveuses","Qui veulent aider"],next_30:["Dépendance augmente","Tu finances secrètement","Tu couvres mensonges"]}
+};
+
+function generateProfile(cat1,cat2){
+const t1=profileBehaviors[cat1];
+const t2=profileBehaviors[cat2];
+if(!t1&&!t2)return {title:"Profil complexe",characteristics:[],behaviors:[],victims:[],next_30:[]};
+if(!t2)return t1;
+if(!t1)return t2;
+const characteristics=[...(t1.characteristics||[]).slice(0,2),...(t2.characteristics||[]).slice(0,2)];
+const behaviors=[...(t1.behaviors||[]).slice(0,2),...(t2.behaviors||[]).slice(0,2)];
+const victims=[...(t1.victims||[]).slice(0,2),...(t2.victims||[]).slice(0,1)];
+const next_30=[...(t1.next_30||[]).slice(0,2),...(t2.next_30||[]).slice(0,3)];
+return {title:`${t1.title} + ${t2.title}`,characteristics,behaviors,victims,next_30};
+}
+
+const temporalContext={less_2w:"⚠️ Moins de 2 semaines : les red flags à ce stade peuvent être signes d'intensité suspecte, de love-bombing ou d'impatience. Sois très vigilante.","2w_1m":"⚠️ 2 semaines à 1 mois : des signaux de manipulation, mensonge ou pression à ce stade sont déjà graves. Il y a assez de temps pour que la cohérence soit établie.","1m_3m":"⚠️ 1 à 3 mois : à ce stade, la personne a eu le temps de montrer qui elle est. Les red flags ne sont plus des 'faux départs', c'est un pattern.","3m_6m":"⚠️ 3 à 6 mois : si les signaux persistent, c'est une choice consciente de la personne, pas une phase. L'attachement est aussi déjà fort chez toi.",more_6m:"⚠️ Plus de 6 mois : les red flags à ce stade indiquent une relation structurellement malsaine. L'inertie et l'attachement rendent le départ plus difficile."};
+
+document.getElementById("checks").innerHTML=checks.map((c,idx)=>{const label=c[0];const description=c[1];const points=c[2];const category=c[3];return `<label class="check"><input type="checkbox" data-idx="${idx}" value="${points}" data-cat="${category}" data-label="${label}"> ${description}</label>`;}).join("");
+
+function parseWhatsApp(text){const lines=text.split('\n');let messages="";const patterns=[/^\[.*?\]\s*[\w\s]+:\s*(.+)$/,/^[\w\s]+:\s*(.+)$/];lines.forEach(line=>{patterns.forEach(pattern=>{if(pattern.test(line)){const match=line.match(pattern);if(match){messages+=" "+match[1];}}});});return messages.toLowerCase();}
+
+function validate(){const context=document.getElementById("context").value.trim();const requests=document.getElementById("requests").value.trim();const quotes=document.getElementById("quotes").value.trim();const whatsapp=document.getElementById("whatsapp").value.trim();const duration=document.getElementById("duration").value;const checked=[...document.querySelectorAll("#checks input:checked")];const errorMsg=document.getElementById("errorMsg");errorMsg.style.display="none";if(!duration){errorMsg.textContent="⚠️ Indique depuis combien de temps ça dure.";errorMsg.style.display="block";return false;}const totalText=(context+" "+requests+" "+quotes+" "+whatsapp).length;if(totalText<80){errorMsg.textContent="⚠️ Décris plus (au moins 80 caractères au total).";errorMsg.style.display="block";return false;}if(checked.length===0){errorMsg.textContent="⚠️ Coche au moins un comportement observé.";errorMsg.style.display="block";return false;}return true;}
+
+function analyze(){if(!validate())return;const context=document.getElementById("context").value.toLowerCase();const requests=document.getElementById("requests").value.toLowerCase();const quotes=document.getElementById("quotes").value.toLowerCase();const whatsapp=parseWhatsApp(document.getElementById("whatsapp").value);const duration=document.getElementById("duration").value;const text=context+" "+requests+" "+quotes+" "+whatsapp;const checked=[...document.querySelectorAll("#checks input:checked")];let score=0,labels=[],categoryScores={};checked.forEach(item=>{const points=parseInt(item.value,10);const category=item.dataset.cat;const label=item.dataset.label;score+=points;categoryScores[category]=(categoryScores[category]||0)+points;labels.push(label);});riskyWords.forEach(item=>{const pattern=item[0];const points=item[1];const label=item[2];const category=item[3];const regex=new RegExp(pattern,"i");if(regex.test(text)){score+=points;categoryScores[category]=(categoryScores[category]||0)+points;labels.push(label);}});score=Math.min(score,100);labels=[...new Set(labels)];const sortedCats=Object.entries(categoryScores).sort((a,b)=>b[1]-a[1]).slice(0,3);const totalScore=Object.values(categoryScores).reduce((a,b)=>a+b,0)||1;let level="VIGILANCE",summary="",color="#ff0000",colorClass="vert";if(score>=0&&score<20){colorClass="vert";}else if(score>=20&&score<40){colorClass="orange";level="RISQUE MODÉRÉ";summary="Il y a des signaux, mais rien de critique pour l'instant. Reste attentive.";}else if(score>=40&&score<70){colorClass="rouge";level="DANGER IMPORTANT";summary="Plusieurs signaux incompatibles avec une relation saine. Sérieusement vigilante.";}else if(score>=70){colorClass="rouge-fonce";level="DANGER MAJEUR";summary="Situation incompatible avec ta sécurité. Il faut sortir de l'échange.";}if(score>=15&&score<40){level="RISQUE RÉEL";summary="Il y a des signaux à ne pas balayer. On ralentit. On vérifie. On ne s'attache pas plus vite que les faits.";}if(score>=40&&score<55){level="DANGER IMPORTANT";summary="Plusieurs signaux sont incompatibles avec une relation claire.";}if(score>=55&&score<75){level="RISQUE TRÈS ÉLEVÉ";summary="La situation présente des signaux forts de manipulation, d'emprise, de mensonge, d'arnaque affective ou de double vie.";}if(score>=75){level="DANGER MAJEUR";summary="Les signaux observés sont incompatibles avec une relation saine.";}const dominantCat=sortedCats[0]?sortedCats[0][0]:"identity";const data=categoryData[dominantCat]||categoryData.identity;document.getElementById("score").textContent=score;document.getElementById("scoreBox").className="scoreBox "+colorClass;document.getElementById("level").textContent=level;document.getElementById("level").style.color=color;document.getElementById("summary").textContent=summary;const tempCtx=document.getElementById("temporalContext");tempCtx.textContent=temporalContext[duration];tempCtx.style.display="block";document.getElementById("categoryScores").innerHTML=sortedCats.map(([cat,pts])=>{const percent=Math.round((pts/totalScore)*100);const categoryLabel=categoryLabels[cat]||cat;return `<div class="categoryItem"><div class="categoryName">${categoryLabel}</div><div class="categoryPercent">${percent}%</div><div class="categoryBar"><div class="categoryFill" style="width:${percent}%"></div></div></div>`;}).join("");const topCats=sortedCats.slice(0,2).map(c=>c[0]);const profileDesc=generateProfile(topCats[0],topCats[1]||"identity");const profileHTML=`<div class="profileTitle">⚠️ ${profileDesc.title}</div><div class="profileBehaviors"><h4>Ce type de personne :</h4><ul>${(profileDesc.characteristics||[]).map(c=>`<li>${c}</li>`).join('')}</ul><h4>Comportements typiques :</h4><ul>${(profileDesc.behaviors||[]).map(b=>`<li>${b}</li>`).join('')}</ul><h4>Tes vulnérabilités cibles :</h4><ul>${(profileDesc.victims||[]).map(v=>`<li>${v}</li>`).join('')}</ul><h4>Les 30 prochains jours ressemblent souvent à :</h4><ul>${(profileDesc.next_30||[]).map(n=>`<li>${n}</li>`).join('')}</ul></div>`;document.getElementById("profileBox").innerHTML=profileHTML;document.getElementById("reading").textContent=data.reading;document.getElementById("badges").innerHTML=labels.length?labels.map(l=>`<span class="badge">${l}</span>`).join(""):"<span class='badge'>Aucun signal fort détecté</span>";document.getElementById("actions").innerHTML=data.actions.map(a=>`<li>${a}</li>`).join("");const urgencyBox=document.getElementById("urgencyBox");if(score>=75){urgencyBox.innerHTML=`<div class="urgency"><h3>⚠️ Sécurité immédiate</h3><p><strong>France :</strong> 3919 (violences, contrôle, menaces) — gratuit, confidentiel, 24h/24</p><p><strong>SOS Amitié :</strong> 09 72 39 40 50 — pour parler à quelqu'un</p><p><strong>Canada :</strong> 1-888-563-0808 (DV hotline)</p><p><strong>À faire maintenant :</strong> contacte une personne de confiance, garde les preuves, ne préviens pas la personne si tu quittes.</p></div>`;}else{urgencyBox.innerHTML="";}document.getElementById("result").style.display="block";document.getElementById("result").scrollIntoView({behavior:"smooth"});}
+document.addEventListener("contextmenu",e=>{e.preventDefault();});
+document.addEventListener("dragstart",e=>e.preventDefault());
+</script>
+</body>
+</html>
