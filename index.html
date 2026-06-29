@@ -86,8 +86,6 @@
 <p class="footerNote">Conseil de sécurité : ne partage jamais d'argent, de documents, de codes, de photos intimes ou d'informations bancaires avec une personne dont l'identité, la cohérence et les intentions ne sont pas vérifiées.</p>
 
 <div class="ctaBox" style="background:linear-gradient(135deg,rgba(255,0,0,.15),rgba(139,0,0,.15));border:2px solid #ff0000;">
-<div class="title">Tu connais quelqu'un qui risque de vivre la même chose ?</div>
-<div class="text">Protège-le avant qu'il ne soit trop tard. Partage ce diagnostic gratuit. Tu ne vends rien. Tu aides quelqu'un à ouvrir les yeux avant une décision importante.</div>
 
 <div style="margin-top:24px;padding:20px;border-radius:16px;background:rgba(255,255,255,.9);border:2px solid #ff0000;">
 <div style="font-size:13px;color:#5c4048;margin-bottom:8px;text-transform:uppercase;font-weight:900;">Ton code personnel</div>
@@ -96,7 +94,7 @@
 <strong>Ton lien personnel :</strong><br>
 <span id="personalLink" style="color:#ff0000;word-break:break-all;">https://resonanceintuitive.github.io/redflag1/?ref=AB8K42</span>
 </div>
-<button onclick="copyLink(this)" style="width:100%;padding:12px;background:#ff0000;color:white;border:none;border-radius:12px;font-weight:900;cursor:pointer;font-size:14px;margin-bottom:16px;">📋 Copier le lien</button>
+<button onclick="copyLink()" style="width:100%;padding:12px;background:#ff0000;color:white;border:none;border-radius:12px;font-weight:900;cursor:pointer;font-size:14px;margin-bottom:16px;">📋 Copier le lien</button>
 </div>
 
 
@@ -513,10 +511,11 @@ function copyEmail(email, buttonElement){
   copyTextSafe(email, buttonElement);
 }
 
-function copyLink(buttonElement){
+function copyLink(){
   const userId = getUserIdSafe();
   const link = `https://resonanceintuitive.github.io/redflag1/?ref=${userId}`;
-  copyTextSafe(link, buttonElement);
+  const button = event.target;
+  copyTextSafe(link, button);
 }
 
 
